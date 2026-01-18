@@ -410,6 +410,9 @@
         </div>
     </div>
     
+    <!-- Cargar configuración de Firebase (archivo no versionado) -->
+    <script src="firebase-config.js"></script>
+    
     <script>
         // Fecha del evento: 25 de enero 2026, 6:00 AM (EST - Miami)
         const eventDate = new Date('2026-01-25T06:00:00-05:00').getTime();
@@ -458,16 +461,12 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
         import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-database.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCNSSYHxq2JhxeRGPuYvxopXY644zok4Qk",
-            authDomain: "marathon-miami-2026.firebaseapp.com",
-            databaseURL: "https://marathon-miami-2026-default-rtdb.firebaseio.com",
-            projectId: "marathon-miami-2026",
-            storageBucket: "marathon-miami-2026.appspot.com",
-            messagingSenderId: "1057896416212",
-            appId: "1:1057896416212:web:16d6c4ad51bd2a1127cc41",
-            measurementId: "G-RX687NS2T7"
-        };
+        // Las credenciales se cargan desde firebase-config.js (no versionado en Git)
+        // firebaseConfig debe estar definido en firebase-config.js
+        if (typeof firebaseConfig === 'undefined') {
+            console.error('Error: firebase-config.js no se encontró. Asegúrate de que existe en el mismo directorio que index.html');
+            alert('Error de configuración: No se pudo cargar las credenciales de Firebase. Por favor, contacta al administrador.');
+        }
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);

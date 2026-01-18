@@ -1,0 +1,15 @@
+# Firebase credentials - NEVER commit this file
+firebase-config.js
+
+# Node modules (if needed in the future)
+node_modules/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
