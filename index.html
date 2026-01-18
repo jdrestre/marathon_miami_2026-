@@ -125,6 +125,187 @@
             font-size: 0.95rem;
             line-height: 1.5;
         }
+
+        .family-messages {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .family-messages h2 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .messages-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+
+        .message-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #06b6d4;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .message-item:last-child {
+            margin-bottom: 0;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .message-sender {
+            color: #06b6d4;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .message-text {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .message-time {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.75rem;
+            margin-top: 8px;
+        }
+
+        .add-message-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            color: white;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+        }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.6);
+        }
+
+        .btn-add:active {
+            transform: translateY(0);
+        }
+
+        .btn-clear {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-clear:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .no-messages {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 30px 20px;
+            font-style: italic;
+        }
+
+        /* Scrollbar personalizada */
+        .messages-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .messages-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .messages-container::-webkit-scrollbar-thumb {
+            background: rgba(6, 182, 212, 0.5);
+            border-radius: 10px;
+        }
+
+        .messages-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(6, 182, 212, 0.7);
+        }
         
         @media (max-width: 480px) {
             .countdown {
@@ -133,6 +314,14 @@
             
             .time-unit {
                 padding: 15px 8px;
+            }
+
+            .messages-container {
+                max-height: 300px;
+            }
+
+            .button-group {
+                flex-direction: column;
             }
         }
     </style>
@@ -195,6 +384,30 @@
             <h2>🏃‍♂️ ¡El desafío está cerca!</h2>
             <p>Cada segundo cuenta. Mantente enfocado y preparado para conquistar los 21.1 km</p>
         </div>
+
+        <!-- Sección de mensajes familiares y motivacionales -->
+        <div class="family-messages">
+            <h2>💌 Mensajes Familiares y Motivacionales</h2>
+            
+            <div class="messages-container" id="messagesContainer">
+                <div class="no-messages" id="noMessages">No hay mensajes aún. ¡Agrega el primero!</div>
+            </div>
+
+            <div class="add-message-form">
+                <div class="form-group">
+                    <label for="senderName">Nombre de quien envía:</label>
+                    <input type="text" id="senderName" placeholder="Tu nombre">
+                </div>
+                <div class="form-group">
+                    <label for="messageText">Tu mensaje:</label>
+                    <textarea id="messageText" placeholder="Escribe tu mensaje motivacional o familiar..."></textarea>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-add" onclick="addMessage()">Enviar Mensaje 💌</button>
+                    <button class="btn btn-clear" onclick="clearMessages()">Borrar Todo</button>
+                </div>
+            </div>
+        </div>
     </div>
     
     <script>
@@ -238,6 +451,125 @@
         document.getElementById('eventImg').onerror = function() {
             this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675"><rect fill="%23f97316" width="1200" height="675"/><text x="50%" y="50%" font-size="40" fill="white" text-anchor="middle" dy=".3em">Coloca aquí marathon-image.jpg</text></svg>';
         };
+    </script>
+
+    <script>
+        // SISTEMA DE MENSAJES FAMILIARES
+        const STORAGE_KEY = 'marathonMessages';
+
+        // Cargar mensajes del almacenamiento local
+        function loadMessages() {
+            const messages = localStorage.getItem(STORAGE_KEY);
+            return messages ? JSON.parse(messages) : [];
+        }
+
+        // Guardar mensajes en almacenamiento local
+        function saveMessages(messages) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+            renderMessages();
+        }
+
+        // Agregar nuevo mensaje
+        function addMessage() {
+            const senderName = document.getElementById('senderName').value.trim();
+            const messageText = document.getElementById('messageText').value.trim();
+
+            if (!senderName || !messageText) {
+                alert('Por favor completa el nombre y el mensaje');
+                return;
+            }
+
+            const messages = loadMessages();
+            const newMessage = {
+                id: Date.now(),
+                sender: senderName,
+                text: messageText,
+                timestamp: new Date().toLocaleString('es-ES')
+            };
+
+            messages.unshift(newMessage); // Agregar al principio (más recientes primero)
+            saveMessages(messages);
+
+            // Limpiar formulario
+            document.getElementById('senderName').value = '';
+            document.getElementById('messageText').value = '';
+            
+            // Enfocar el campo de nombre
+            document.getElementById('senderName').focus();
+
+            // Scroll automático al contenedor de mensajes
+            setTimeout(() => {
+                const container = document.getElementById('messagesContainer');
+                container.scrollTop = 0;
+            }, 100);
+        }
+
+        // Renderizar mensajes en la página
+        function renderMessages() {
+            const messages = loadMessages();
+            const container = document.getElementById('messagesContainer');
+            const noMessages = document.getElementById('noMessages');
+
+            if (messages.length === 0) {
+                container.innerHTML = '<div class="no-messages">No hay mensajes aún. ¡Agrega el primero!</div>';
+                return;
+            }
+
+            let html = '';
+            messages.forEach(msg => {
+                html += `
+                    <div class="message-item">
+                        <div class="message-sender">💌 ${escapeHtml(msg.sender)}</div>
+                        <div class="message-text">${escapeHtml(msg.text)}</div>
+                        <div class="message-time">${msg.timestamp}</div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Función para escapar caracteres HTML
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // Borrar todos los mensajes
+        function clearMessages() {
+            if (confirm('¿Estás seguro de que deseas borrar todos los mensajes? Esta acción no se puede deshacer.')) {
+                localStorage.removeItem(STORAGE_KEY);
+                renderMessages();
+            }
+        }
+
+        // Permitir enviar mensaje con Enter en el textarea
+        document.addEventListener('DOMContentLoaded', function() {
+            const messageInput = document.getElementById('messageText');
+            if (messageInput) {
+                messageInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && e.ctrlKey) {
+                        addMessage();
+                    }
+                });
+            }
+        });
+
+        // Cargar y renderizar mensajes al iniciar
+        renderMessages();
+
+        // Sincronizar mensajes entre pestañas
+        window.addEventListener('storage', function(e) {
+            if (e.key === STORAGE_KEY) {
+                renderMessages();
+            }
+        });
     </script>
     <script>
         // SISTEMA DE ACTUALIZACIÓN AUTOMÁTICA SILENCIOSA
